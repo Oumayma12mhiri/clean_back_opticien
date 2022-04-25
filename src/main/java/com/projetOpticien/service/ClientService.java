@@ -3,10 +3,13 @@ package com.projetOpticien.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import com.projetOpticien.dao.ClientCriteriaRepository;
 import com.projetOpticien.dao.ClientRepository;
 import com.projetOpticien.model.Client;
+import com.projetOpticien.model.ClientPage;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,7 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class ClientService {
-	
+	@Autowired
+	private ClientCriteriaRepository clientCriteriaRepository  ;
 	private final ClientRepository clientRepository;
 
 	@Autowired
@@ -64,6 +68,8 @@ public class ClientService {
 
 	}
 	
-	
+    public Page<Client> getClient(ClientPage clientPage,
+      		 String  clientSearchCriteria){
+      return  clientCriteriaRepository.findAllWithFilters( clientPage,  clientSearchCriteria);}
 
 }

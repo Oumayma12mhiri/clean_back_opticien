@@ -1,7 +1,6 @@
 package com.projetOpticien.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,8 +23,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 
@@ -33,8 +32,8 @@ import lombok.ToString;
 @ToString
 
 @Entity
-@Table(name = "t_client")
-public class Client implements Serializable {
+@Table(name = "t_vente")
+public class Vente implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -43,36 +42,30 @@ public class Client implements Serializable {
 	@Include
 	private Long id;
 	
-	private String reference;
-	private String cin;
-	private String nomPrenom;
-	private LocalDate dateNaissance;
-	private int age;
-	private String email;
-	private String adresse;
-	private String ville;
-	private String pays;
-	private String numAssureSocial;
-	private String numTel1;
-	private String numTel2;
-	private Double chiffreAffaire;
-	private Double solde;
-	private String observations;
-	private String matriculeFiscal;
+	private Double remiseVente;
+	private Double totaleVente;
+	private String numFicheManuelle;
+	
+
+	@ManyToOne
+	@JsonIgnore
+	private Client client;
 	
 	
-	@OneToMany(mappedBy="client")
-	private List<Vente> ventes;
+	@ManyToMany
+    private Collection<Verre> verres;
+	
+	
+	@ManyToMany
+    private Collection<Cadre> cadres;
 	
 	@ManyToMany
     private Collection<PointVente> pointsVentes;
 	
-	@ManyToOne
-	@JsonIgnore
-	private Organisme organisme;
 	
-	@ManyToOne
-	@JsonIgnore
-	private Groupe_fam groupe;
+	@OneToMany(mappedBy="vente")
+	private List<Visite> visites;
+	
+	
 
 }
